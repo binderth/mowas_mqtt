@@ -10,8 +10,8 @@ Converter for reading JSON from MOWAS and sending the data via MQTT
 * landkreis_ags: insert your AGS
 * mqtt_ipaddress: IP-Address of your MQTT Broker
 * mqtt_user: MQTT User
-* mqtt_pass= MQTT password
-* mqtt_roottopic MQTT topic for the JSON "openHAB/master/mowasJSON/"
+* mqtt_pass: MQTT password
+* mqtt_roottopic: MQTT topic for the JSON 
 
 # what the script does
 The script searches for Identifiers of your AGS in all of warnings from the german Bundesamt für Bevölkerungsschutz und Katastrophenschutz for your regions.
