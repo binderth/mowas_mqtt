@@ -12,7 +12,7 @@ from requests.exceptions import ConnectionError
 
 
 # API information
-# AGS from a "Landkreis" coming from https://www.orte-in-deutschland.de/amtlicher-gemeindeschluessel-ags.html
+# AGS from a "Landkreis" coming from https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/_inhalt.html
 
 landkreis_ags = '097720000000'
 landkreis_status = 'https://warnung.bund.de/bbk.status/status_{}.json'.format(landkreis_ags)
