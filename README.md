@@ -3,11 +3,11 @@ Converter for reading JSON from MOWAS and sending the data via MQTT
 
 # Prerequisites
 * living in Germany ;)
-* knowing your "Amtlicher Gemeindeschlüssel (AGS)", available from https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.html
+* knowing your "Amtlicher Gemeindeschlüssel (AGS)" for your Landkreis (not city!), available from https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.html
 * mosquitto_pub (see ToDo)
 
 # Variables in script
-* landkreis_ags: insert your AGS
+* landkreis_ags: insert your AGS for your Landkreis, there's only JSONs available for Landkreise, not cities or other smaller entities.
 * mqtt_ipaddress: IP-Address of your MQTT Broker
 * mqtt_user: MQTT User
 * mqtt_pass: MQTT password
