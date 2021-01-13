@@ -42,17 +42,17 @@ def get_json_as_dict(url):
     except ConnectionError as e:
         print("Connection Error")
         print(e)
-        return json.loads('{"data": {"Connection Error": 1, "URL": "'+url+'", "serial": "'+sn+'", "error": "'+e+'"}}')
+        return json.loads('{"data": {"Connection Error": 1, "URL": "'+url+'", "error": "'+e+'"}}')
     # wenn HTTP-StatusCode nicht 200
     if r.status_code != 200:
-        return json.loads('{"data": {"HTTP Error": 1, "URL": "'+url+'", "serial": "'+sn+'", "error": "'+str(r.status_code)+'"}}')
+        return json.loads('{"data": {"HTTP Error": 1, "URL": "'+url+'", "error": "'+str(r.status_code)+'"}}')
     # JSON to dict, gracefully with error
     try:
         data = json.loads(r.content.decode())
     except ValueError as e:
         print ("JSON Error")
         print (e)
-        return json.loads('{"data": {"JSON Error": 1, "URL": "'+url+'", "serial": "'+sn+'", "error": "'+e+'"}}')
+        return json.loads('{"data": {"JSON Error": 1, "URL": "'+url+'", "error": "'+e+'"}}')
     return data
 
 
