@@ -3,7 +3,7 @@ Converter for reading JSON from MOWAS and sending the data via MQTT
 
 # Prerequisites
 * living in Germany ;)
-* knowing your "Amtlicher Gemeindeschlüssel (AGS)", available from https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/_inhalt.html
+* knowing your "Amtlicher Gemeindeschlüssel (AGS)", available from https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.html
 * mosquitto_pub (see ToDo)
 
 # Variables in script
