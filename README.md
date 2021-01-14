@@ -9,8 +9,8 @@ Converter for reading JSON from MOWAS and sending the data via MQTT
 # Variables in mowas_mqtt.ini settings file
 [General]
 * loglevel: INFO, DEBUG
-** INFO: shows only when ready
-** DEBUG: shows more debug information to track down errors
+* *INFO: shows only when ready
+* *DEBUG: shows more debug information to track down errors
 
 [AGS]
 * Landkreis: name of your Landkreis (not yet used in script)
