@@ -15,6 +15,8 @@ DEBUG: shows more debug information to track down errors
 [AGS]
 * Landkreis: name of your Landkreis (not yet used in script)
 * AGScode: insert your AGS (Amtlicher Gemeindeschlüssel) for your Landkreis, there's only JSONs available for Landkreise, not cities or other smaller entities. The AGScode must be 12 digits long, if yours is shorter, please add enough "0" for 12 digits.
+
+[MQTT]
 * Broker: IP-Address (or FQN) of your MQTT Broker
 * Port: Port for your Broker (1883 or 8883 for SSL)
 * QOS: QOS-level for the messge
