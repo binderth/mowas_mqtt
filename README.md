@@ -5,6 +5,7 @@ Converter for reading JSON from MOWAS and sending the data via MQTT
 * living in Germany ;)
 * knowing your "Amtlicher Gemeindeschlüssel (AGS)" for your Landkreis (not city!), available from https://www.destatis.de/DE/Themen/Laender-Regionen/Regionales/Gemeindeverzeichnis/Administrativ/04-kreise.html
 * Paho MQTT Client (https://pypi.org/project/paho-mqtt/) e.g. `pip install paho-mqtt`
+* alternatively you could set Paho in the settings to 'False' and the script will use mosquitto-client to send e.g. `sudo apt-get install mosquitto-clients`
 
 # Variables in mowas_mqtt.ini settings file
 [General]
@@ -17,9 +18,11 @@ Converter for reading JSON from MOWAS and sending the data via MQTT
 * AGScode: insert your AGS (Amtlicher Gemeindeschlüssel) for your Landkreis, there's only JSONs available for Landkreise, not cities or other smaller entities. The AGScode must be 12 digits long, if yours is shorter, please add enough "0" for 12 digits.
 
 [MQTT]
+* Paho: True/False (with False the script uses os.system and mosquitto_pub to publish, with True an installed Paho-Client)
 * Broker: IP-Address (or FQN) of your MQTT Broker
 * Port: Port for your Broker (1883 or 8883 for SSL)
-* QOS: QOS-level for the messge
+* QOS: QOS-level for the message
+* Retain: True/False for telling the MQTT-server to retain the message or discard it
 * Topic: MQTT topic for the JSON 
 * User: Username for the broker (leave empty for anonymous call)
 * Password: Password for the broker (leave empty for anonymous call)
