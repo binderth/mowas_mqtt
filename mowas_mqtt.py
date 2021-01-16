@@ -57,7 +57,7 @@ def send_mqtt(message, topic):
         mqttclient.username_pw_set(mqtt_user, mqtt_pass)
     mqttclient.connect(mqtt_ipaddress, mqtt_port, 60)
     mqttclient.loop_start()
-    mqttpub = mqttclient.publish(topic, mqtt_qos)
+    mqttpub = mqttclient.publish(topic, payload=message, mqtt_qos)
 
 
 def get_json_as_dict(url):
