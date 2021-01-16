@@ -5,7 +5,6 @@ import requests                                     # requesting information
 import json                                         # working with JSON 
 import configparser                                 # working with INI
 from requests.exceptions import ConnectionError     # errors in requests
-import paho.mqtt.client as mqtt				        # using MQTT-client
 
 
 # read settings from mowas_mqtt.ini
@@ -17,12 +16,14 @@ Settings.read(ReadSettings)
 # Log-Level
 loglevel = Settings.get("General", "loglevel")
 # MQTT-Settings
+mqtt_paho = eval(Settings.get("MQTT", "Paho"))
 mqtt_ipaddress = Settings.get("MQTT", "Broker")
 mqtt_user = Settings.get("MQTT", "User")
 mqtt_pass = Settings.get("MQTT", "Password")
 mqtt_topic = Settings.get("MQTT", "Topic")
 mqtt_port = int(Settings.get("MQTT", "Port"))
 mqtt_qos = int(Settings.get("MQTT", "QOS"))
+mqtt_retain = eval(Settings.get("MQTT", "Retain"))
 mqtt_clientid = Settings.get("MQTT", "ClientID")
 
 # Landkreis AGS
@@ -44,12 +45,16 @@ JSONreturn = {}
 
 def on_connect(client, userdata, flags, rc):
     # Connect to MQTT-Broker
-    print("Connected to broker with result code " + str(rc))
+    if rc==0:
+        print("Connected to broker using Paho with result code " + str(rc))
+    else:
+        print("Connection Error to broker using Paho with result code "+ str(rc))
 
-def send_mqtt(message, topic):
+def send_mqtt_paho(message, topic):
     # send MQTT message
-    print ("Sending JSON with Broker '{}' to Topic '{}'".format(mqtt_ipaddress,topic))
+    print ("Sending JSON using Paho-Client with Broker '{}' to Topic '{}'".format(mqtt_ipaddress,topic))
     if (loglevel == "DEBUG"):
+        print ("Broker with Client-ID '{}', Port '{}', User '{}', Passwort '{}' and QOS '{}', Retain '{}'".format(mqtt_clientid, mqtt_port, mqtt_user, mqtt_pass, mqtt_qos, mqtt_retain))         
         print ("Sending message: " + message)
     mqttclient = mqtt.Client(mqtt_clientid)
     mqttclient.on_connect = on_connect
@@ -57,8 +62,14 @@ def send_mqtt(message, topic):
         mqttclient.username_pw_set(mqtt_user, mqtt_pass)
     mqttclient.connect(mqtt_ipaddress, mqtt_port, 60)
     mqttclient.loop_start()
-    mqttpub = mqttclient.publish(topic, payload=message, mqtt_qos)
+    mqttpub = mqttclient.publish(topic, payload=message, qos=mqtt_qos, retain=mqtt_retain)
+    mqttclient.loop_stop()
+    mqttclient.disconnect()
 
+def send_mqtt_os(message, topic):
+    # send MQTT message
+    print ("Sending JSON using os.system and mosquitto_pub and Broker '{}' to Topic '{}'".format(mqtt_ipaddress,topic))
+    os.system("mosquitto_pub -h " + mqtt_ipaddress + " -u '" + mqtt_user + "' -P '" + mqtt_pass + "' -t '" + topic + "' -m '" + message + "'")     
 
 def get_json_as_dict(url):
     # GET JSON from URL
@@ -165,4 +176,10 @@ if __name__ == "__main__":
     # Sending final JSON with MQTT
     if loglevel == "DEBUG":
         print ("Sending MQTT")
-    send_mqtt(json.dumps(JSONreturn), mqtt_topic)
+
+    # if Paho is active use this, else use mosquitto_pub with .os
+    if mqtt_paho == True:
+        import paho.mqtt.client as mqtt				        # using MQTT-client
+        send_mqtt_paho(json.dumps(JSONreturn), mqtt_topic)
+    else:
+        send_mqtt_os(json.dumps(JSONreturn), mqtt_topic)
